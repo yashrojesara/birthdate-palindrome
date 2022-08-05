@@ -12,13 +12,17 @@ const useStyles = makeStyles({
   root: {
     display: "flex",
     justifyContent: "center",
-    marginTop: "2em",
     flexDirection: "column",
     alignItems: "center",
   },
   text: {
     maxWidth: "50%",
     textAlign: "center",
+  },
+  message: {
+    marginTop: "2em",
+    fontWeight: "bold",
+    maxWidth: "50%",
   },
 });
 
@@ -37,20 +41,19 @@ function DateComponent() {
 
   const onClick = () => {
     setIsButtonClicked(true);
+
     if (isPalindrome(date)) {
       setPalindrome(true);
     } else {
+      setPalindrome(false);
       findNearestPalindrome();
     }
   };
 
   const isPalindrome = (userDate) => {
-    const dateString = userDate.toLocaleDateString("en-US");
+    const dateString = userDate.toLocaleDateString("en-US"); //8/5/2022 - "MM/DD/YYYY"
     const splitDate = dateString.split("/").join("");
     const reversedDateString = splitDate.split("").reverse().join("");
-    if (splitDate === reversedDateString) {
-      console.log(dateString, splitDate);
-    }
     return splitDate === reversedDateString;
   };
 
@@ -84,15 +87,19 @@ function DateComponent() {
 
   return (
     <div className={classes.root}>
-      <Typography
-        variant="h6"
-        className={classes.text}
-        style={{ marginBottom: "1em" }}
-      >
+      <Typography variant="h5" className={classes.text}>
         Is Your BirthDate Palindrome?
       </Typography>
 
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <Typography
+        variant="h6"
+        className={classes.text}
+        style={{ marginBottom: "2em", fontSize: "14px" }}
+      >
+        (Date Format is "MM/DD/YYYY")
+      </Typography>
+
+      <div>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <Stack spacing={3}>
             <DesktopDatePicker
@@ -100,7 +107,6 @@ function DateComponent() {
               inputFormat={"MM/dd/yyyy"}
               value={date}
               onChange={handleChange}
-              maxDate={new Date()}
               renderInput={(params) => <TextField {...params} />}
             />
           </Stack>
@@ -117,7 +123,7 @@ function DateComponent() {
       </Button>
 
       {isButtonCLicked && (
-        <span style={{ marginTop: "2em", fontWeight: "bold", maxWidth: "50%" }}>
+        <span className={classes.message}>
           {palindrome
             ? "Your BirthDate is a Palindrome 🥳🥳🥳"
             : `${"Your BirthDate is not a Palindrome. The nearest Palindrome is "} ${nearestPalindrome} ${"Difference b/w your date and nearest Palindrome is"} ${difference} days`}
