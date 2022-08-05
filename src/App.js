@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import DateComponent from "./Component/DateComponent";
+import Header from "./Component/Header";
+import Footer from "./Component/Footer";
+import { makeStyles } from "@mui/styles";
+
+const useStyles = makeStyles({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    height: "100%",
+    width: "100%",
+    position: "absolute",
+  },
+});
 
 function App() {
+  const classes = useStyles();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={classes.root}>
+      <Header />
+      <DateComponent />
+      <Footer />
     </div>
   );
 }
